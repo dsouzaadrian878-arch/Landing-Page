@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Delivery Application</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.primary {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .nav-btn.secondary {
+            background: #f1f3f5;
+            color: #333;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            max-width: 450px;
+            margin: 3rem auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .auth-title {
+            text-align: center;
+            color: #ff6b6b;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .toggle-link a {
+            color: #ff6b6b;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-subtitle {
+            color: #666;
+        }
+
+        /* Pizza Grid */
+        .pizza-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pizza-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .pizza-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .pizza-image {
+            height: 200px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .pizza-content {
+            padding: 1.5rem;
+        }
+
+        .pizza-name {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .pizza-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .pizza-price {
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .order-btn:hover {
+            background: #ee5a6f;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .size-options,
+        .topping-options {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        .size-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .size-option {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .size-option.selected {
+            border-color: #ff6b6b;
+            background: #fff5f5;
+        }
+
+        .size-option:hover {
+            border-color: #ff6b6b;
+        }
+
+        .topping-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+
+        .topping-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #ff6b6b;
+        }
+
+        .order-summary {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            padding-top: 0.5rem;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        /* Admin Dashboard */
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .admin-tab {
+            padding: 0.8rem 1.5rem;
+            background: #f1f3f5;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .admin-tab.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .admin-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .orders-table th,
+        .orders-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .orders-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-preparing {
+            background: #cfe2ff;
+            color: #084298;
+        }
+
+        .status-delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .message.success {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .back-home {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            color: #ff6b6b;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .back-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .pizza-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .size-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">🍕 PizzaHub</div>
+        <div class="nav-links" id="navLinks">
+            <button class="nav-btn secondary" onclick="showView('login')">Login</button>
+            <button class="nav-btn primary" onclick="showView('register')">Register</button>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div class="auth-container" id="loginView">
+        <h2 class="auth-title">Login</h2>
+        <div class="message" id="loginMessage"></div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <div class="form-group">
+                <label>Login As</label>
+                <select id="loginRole">
+                    <option value="user">Customer</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <div class="toggle-link">
+            Don't have an account? <a onclick="showView('register')">Register</a>
+        </div>
+    </div>
+
+    <!-- Register Form -->
+    <div class="auth-container" id="registerView" style="display: none;">
+        <h2 class="auth-title">Register</h2>
+        <div class="message" id="registerMessage"></div>
+        <form id="registerForm">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="registerName" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="registerEmail" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="registerPassword" required>
+            </div>
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" id="registerPhone" required>
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text" id="registerAddress" required>
+            </div>
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <div class="toggle-link">
+            Already have an account? <a onclick="showView('login')">Login</a>
+        </div>
+    </div>
+
+    <!-- User Dashboard -->
+    <div class="dashboard" id="userDashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Welcome, <span id="userName"></span>!</h1>
+                <p class="dashboard-subtitle">Choose your favorite pizza and customize it</p>
+            </div>
+
+            <div class="pizza-grid" id="pizzaGrid"></div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="dashboard" id="adminDashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Admin Dashboard</h1>
+                <p class="dashboard-subtitle">Manage orders and inventory</p>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" onclick="switchAdminTab('stats')">Statistics</button>
+                <button class="admin-tab" onclick="switchAdminTab('orders')">Orders</button>
+                <button class="admin-tab" onclick="switchAdminTab('inventory')">Inventory</button>
+            </div>
+
+            <div class="admin-content">
+                <div id="statsTab">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalOrders">0</div>
+                            <div class="stat-label">Total Orders</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="pendingOrders">0</div>
+                            <div class="stat-label">Pending Orders</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalRevenue">$0</div>
+                            <div class="stat-label">Total Revenue</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCustomers">0</div>
+                            <div class="stat-label">Total Customers</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ordersTab" style="display: none;">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Pizza</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div id="inventoryTab" style="display: none;">
+                    <h3>Pizza Inventory</h3>
+                    <div id="inventoryList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalPizzaName"></h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+
+            <div class="size-options">
+                <span class="option-label">Select Size</span>
+                <div class="size-grid">
+                    <div class="size-option" onclick="selectSize('small', 8)">
+                        <div>Small</div>
+                        <div>$8</div>
+                    </div>
+                    <div class="size-option" onclick="selectSize('medium', 12)">
+                        <div>Medium</div>
+                        <div>$12</div>
+                    </div>
+                    <div class="size-option" onclick="selectSize('large', 16)">
+                        <div>Large</div>
+                        <div>$16</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topping-options">
+                <span class="option-label">Add Toppings ($1 each)</span>
+                <div class="topping-item">
+                    <input type="checkbox" id="topping1" value="Extra Cheese" onchange="updateOrderSummary()">
+                    <label for="topping1">Extra Cheese</label>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" id="topping2" value="Mushrooms" onchange="updateOrderSummary()">
+                    <label for="topping2">Mushrooms</label>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" id="topping3" value="Olives" onchange="updateOrderSummary()">
+                    <label for="topping3">Olives</label>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" id="topping4" value="Pepperoni" onchange="updateOrderSummary()">
+                    <label for="topping4">Pepperoni</label>
+                </div>
+                <div class="topping-item">
+                    <input type="checkbox" id="topping5" value="Bell Peppers" onchange="updateOrderSummary()">
+                    <label for="topping5">Bell Peppers</label>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <div class="summary-item">
+                    <span>Pizza:</span>
+                    <span id="summaryPizza">-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Size:</span>
+                    <span id="summarySize">-</span>
+                </div>
+                <div class="summary-item">
+                    <span>Toppings:</span>
+                    <span id="summaryToppings">None</span>
+                </div>
+                <div class="summary-item summary-total">
+                    <span>Total:</span>
+                    <span id="summaryTotal">$0</span>
+                </div>
+            </div>
+
+            <button class="btn" onclick="placeOrder()">Place Order</button>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-home">← Back to Hub</a>
+
+    <script>
+        // Data Storage
+        let users = JSON.parse(localStorage.getItem('pizzaUsers')) || [];
+        let orders = JSON.parse(localStorage.getItem('pizzaOrders')) || [];
+        let currentUser = null;
+        let currentOrder = {
+            pizza: null,
+            size: null,
+            sizePrice: 0,
+            toppings: []
+        };
+
+        const pizzas = [
+            { id: 1, name: 'Margherita', description: 'Classic tomato, mozzarella, and basil', emoji: '🍕', stock: 50 },
+            { id: 2, name: 'Pepperoni', description: 'Loaded with pepperoni and cheese', emoji: '🍕', stock: 45 },
+            { id: 3, name: 'Vegetarian', description: 'Fresh veggies and cheese', emoji: '🥗', stock: 40 },
+            { id: 4, name: 'BBQ Chicken', description: 'BBQ sauce, chicken, and onions', emoji: '🍗', stock: 35 },
+            { id: 5, name: 'Hawaiian', description: 'Ham, pineapple, and cheese', emoji: '🍍', stock: 30 }
+        ];
+
+        // Initialize admin account
+        if (!users.find(u => u.email === 'admin@pizza.com')) {
+            users.push({
+                name: 'Admin',
+                email: 'admin@pizza.com',
+                password: 'admin123',
+                phone: '1234567890',
+                address: 'Admin Office',
+                role: 'admin',
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('pizzaUsers', JSON.stringify(users));
+        }
+
+        // View Management
+        function showView(view) {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('registerView').style.display = 'none';
+            document.getElementById('userDashboard').classList.remove('active');
+            document.getElementById('adminDashboard').classList.remove('active');
+
+            if (view === 'login') {
+                document.getElementById('loginView').style.display = 'block';
+            } else if (view === 'register') {
+                document.getElementById('registerView').style.display = 'block';
+            } else if (view === 'userDashboard') {
+                document.getElementById('userDashboard').classList.add('active');
+                loadPizzas();
+            } else if (view === 'adminDashboard') {
+                document.getElementById('adminDashboard').classList.add('active');
+                loadAdminData();
+            }
+        }
+
+        // Authentication
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const phone = document.getElementById('registerPhone').value;
+            const address = document.getElementById('registerAddress').value;
+
+            if (users.find(u => u.email === email)) {
+                showMessage('registerMessage', 'Email already registered', 'error');
+                return;
+            }
+
+            users.push({
+                name, email, password, phone, address,
+                role: 'user',
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('pizzaUsers', JSON.stringify(users));
+            showMessage('registerMessage', 'Registration successful! Please login.', 'success');
+            setTimeout(() => showView('login'), 1500);
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const role = document.getElementById('loginRole').value;
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (!user) {
+                showMessage('loginMessage', 'Invalid credentials', 'error');
+                return;
+            }
+
+            if (user.role !== role) {
+                showMessage('loginMessage', `This account is not registered as ${role}`, 'error');
+                return;
+            }
+
+            currentUser = user;
+            updateNavbar();
+            showView(role === 'admin' ? 'adminDashboard' : 'userDashboard');
+        });
+
+        function updateNavbar() {
+            document.getElementById('navLinks').innerHTML = `
+                <span style="color: #333; font-weight: 600;">${currentUser.name}</span>
+                <button class="nav-btn secondary" onclick="logout()">Logout</button>
+            `;
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('navLinks').innerHTML = `
+                <button class="nav-btn secondary" onclick="showView('login')">Login</button>
+                <button class="nav-btn primary" onclick="showView('register')">Register</button>
+            `;
+            showView('login');
+        }
+
+        // User Dashboard
+        function loadPizzas() {
+            document.getElementById('userName').textContent = currentUser.name;
+            const grid = document.getElementById('pizzaGrid');
+            grid.innerHTML = pizzas.map(pizza => `
+                <div class="pizza-card">
+                    <div class="pizza-image">${pizza.emoji}</div>
+                    <div class="pizza-content">
+                        <h3 class="pizza-name">${pizza.name}</h3>
+                        <p class="pizza-description">${pizza.description}</p>
+                        <div class="pizza-price">From $8</div>
+                        <button class="order-btn" onclick="openOrderModal(${pizza.id})">Order Now</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openOrderModal(pizzaId) {
+            const pizza = pizzas.find(p => p.id === pizzaId);
+            currentOrder.pizza = pizza;
+            document.getElementById('modalPizzaName').textContent = pizza.name;
+            document.getElementById('summaryPizza').textContent = pizza.name;
+            document.getElementById('orderModal').classList.add('active');
+
+            // Reset selections
+            document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+            currentOrder.size = null;
+            currentOrder.sizePrice = 0;
+            currentOrder.toppings = [];
+            updateOrderSummary();
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        function selectSize(size, price) {
+            currentOrder.size = size;
+            currentOrder.sizePrice = price;
+            document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
+            event.target.closest('.size-option').classList.add('selected');
+            updateOrderSummary();
+        }
+
+        function updateOrderSummary() {
+            const toppings = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+                toppings.push(cb.value);
+            });
+            currentOrder.toppings = toppings;
+
+            document.getElementById('summarySize').textContent = currentOrder.size ?
+                `${currentOrder.size.charAt(0).toUpperCase() + currentOrder.size.slice(1)} ($${currentOrder.sizePrice})` : '-';
+            document.getElementById('summaryToppings').textContent = toppings.length > 0 ?
+                `${toppings.join(', ')} ($${toppings.length})` : 'None';
+
+            const total = currentOrder.sizePrice + toppings.length;
+            document.getElementById('summaryTotal').textContent = `$${total}`;
+        }
+
+        function placeOrder() {
+            if (!currentOrder.size) {
+                alert('Please select a size');
+                return;
+            }
+
+            const order = {
+                id: Date.now(),
+                userId: currentUser.email,
+                userName: currentUser.name,
+                pizza: currentOrder.pizza.name,
+                size: currentOrder.size,
+                toppings: currentOrder.toppings,
+                total: currentOrder.sizePrice + currentOrder.toppings.length,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            };
+
+            orders.push(order);
+            localStorage.setItem('pizzaOrders', JSON.stringify(orders));
+
+            // Update inventory
+            const pizza = pizzas.find(p => p.id === currentOrder.pizza.id);
+            pizza.stock--;
+
+            alert('Order placed successfully!');
+            closeModal();
+        }
+
+        // Admin Dashboard
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('statsTab').style.display = 'none';
+            document.getElementById('ordersTab').style.display = 'none';
+            document.getElementById('inventoryTab').style.display = 'none';
+
+            if (tab === 'stats') {
+                document.getElementById('statsTab').style.display = 'block';
+            } else if (tab === 'orders') {
+                document.getElementById('ordersTab').style.display = 'block';
+                loadOrders();
+            } else if (tab === 'inventory') {
+                document.getElementById('inventoryTab').style.display = 'block';
+                loadInventory();
+            }
+        }
+
+        function loadAdminData() {
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = orders.filter(o => o.status === 'pending').length;
+            document.getElementById('totalRevenue').textContent = '$' + orders.reduce((sum, o) => sum + o.total, 0);
+            document.getElementById('totalCustomers').textContent = users.filter(u => u.role === 'user').length;
+        }
+
+        function loadOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>#${order.id.toString().slice(-6)}</td>
+                    <td>${order.userName}</td>
+                    <td>${order.pizza} (${order.size})</td>
+                    <td>$${order.total}</td>
+                    <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                    <td>
+                        <select onchange="updateOrderStatus(${order.id}, this.value)">
+                            <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="preparing" ${order.status === 'preparing' ? 'selected' : ''}>Preparing</option>
+                            <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateOrderStatus(orderId, status) {
+            const order = orders.find(o => o.id === orderId);
+            order.status = status;
+            localStorage.setItem('pizzaOrders', JSON.stringify(orders));
+            loadOrders();
+            loadAdminData();
+        }
+
+        function loadInventory() {
+            const list = document.getElementById('inventoryList');
+            list.innerHTML = pizzas.map(pizza => `
+                <div style="padding: 1rem; background: #f8f9fa; border-radius: 8px; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${pizza.name}</strong>
+                            <div style="color: #666; font-size: 0.9rem;">Stock: ${pizza.stock} units</div>
+                        </div>
+                        <div>
+                            <button onclick="updateStock(${pizza.id}, -1)" style="padding: 0.5rem 1rem; margin-right: 0.5rem;">-</button>
+                            <button onclick="updateStock(${pizza.id}, 1)" style="padding: 0.5rem 1rem;">+</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStock(pizzaId, change) {
+            const pizza = pizzas.find(p => p.id === pizzaId);
+            pizza.stock = Math.max(0, pizza.stock + change);
+            loadInventory();
+        }
+
+        function showMessage(elementId, text, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = text;
+            el.className = `message ${type} show`;
+            setTimeout(() => el.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+
+</html>

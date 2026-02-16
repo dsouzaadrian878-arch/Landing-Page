@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Task Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .level-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .level-badge {
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .level-1 { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); color: #1a1a1a; }
+        .level-2 { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); color: #fff; }
+        .level-3 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff; }
+
+        .level-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            display: block;
+        }
+
+        .task-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .task-number {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .task-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .task-description {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            line-height: 1.5;
+        }
+
+        .task-arrow {
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover .task-arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .task-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Web Development Task Hub</h1>
+            <p class="subtitle">Master web development through hands-on projects</p>
+        </header>
+
+        <!-- Level 1: Beginner -->
+        <div class="level-section">
+            <div class="level-header">
+                <span class="level-badge level-1">Level 1</span>
+                <h2 class="level-title">Beginner Tasks</h2>
+            </div>
+            <div class="task-grid">
+                <a href="landing-page.html" class="task-card">
+                    <div class="task-number">Task 1</div>
+                    <div class="task-name">Landing Page</div>
+                    <div class="task-description">Create a visually appealing landing page with multiple sections using HTML and CSS</div>
+                    <div class="task-arrow">→</div>
+                </a>
+                <a href="portfolio.html" class="task-card">
+                    <div class="task-number">Task 2</div>
+                    <div class="task-name">Portfolio</div>
+                    <div class="task-description">Build a personal portfolio website showcasing your skills and work</div>
+                    <div class="task-arrow">→</div>
+                </a>
+                <a href="temperature-converter.html" class="task-card">
+                    <div class="task-number">Task 3</div>
+                    <div class="task-name">Temperature Converter</div>
+                    <div class="task-description">Convert between Celsius, Fahrenheit, and Kelvin with validation</div>
+                    <div class="task-arrow">→</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Level 2: Intermediate -->
+        <div class="level-section">
+            <div class="level-header">
+                <span class="level-badge level-2">Level 2</span>
+                <h2 class="level-title">Intermediate Tasks</h2>
+            </div>
+            <div class="task-grid">
+                <a href="calculator.html" class="task-card">
+                    <div class="task-number">Task 1</div>
+                    <div class="task-name">Calculator</div>
+                    <div class="task-description">Build a fully functional calculator with basic math operations</div>
+                    <div class="task-arrow">→</div>
+                </a>
+                <a href="tribute-page.html" class="task-card">
+                    <div class="task-number">Task 2</div>
+                    <div class="task-name">Tribute Page</div>
+                    <div class="task-description">Create an engaging page honoring someone you admire</div>
+                    <div class="task-arrow">→</div>
+                </a>
+                <a href="todo-webapp.html" class="task-card">
+                    <div class="task-number">Task 3</div>
+                    <div class="task-name">To-Do WebApp</div>
+                    <div class="task-description">Develop a task management app with CRUD operations</div>
+                    <div class="task-arrow">→</div>
+                </a>
+                <a href="login-authentication.html" class="task-card">
+                    <div class="task-number">Task 4</div>
+                    <div class="task-name">Login Authentication</div>
+                    <div class="task-description">Build a complete login and registration system</div>
+                    <div class="task-arrow">→</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Level 3: Advanced -->
+        <div class="level-section">
+            <div class="level-header">
+                <span class="level-badge level-3">Level 3</span>
+                <h2 class="level-title">Advanced Task</h2>
+            </div>
+            <div class="task-grid">
+                <a href="pizza-delivery.html" class="task-card">
+                    <div class="task-number">Full Stack Project</div>
+                    <div class="task-name">Pizza Delivery Application</div>
+                    <div class="task-description">Complete pizza delivery system with user/admin dashboards, authentication, and order management</div>
+                    <div class="task-arrow">→</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

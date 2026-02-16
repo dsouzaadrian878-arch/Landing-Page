@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tribute to Marie Curie</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-style: italic;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect fill="%23667eea" width="800" height="500"/><text x="400" y="250" font-size="120" fill="white" text-anchor="middle" dominant-baseline="middle" font-family="Georgia">⚛️</text></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .intro {
+            font-size: 1.3rem;
+            color: #555;
+            font-style: italic;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            border-radius: 5px;
+        }
+
+        p {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            color: #444;
+            text-align: justify;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            border-left: 5px solid #fdcb6e;
+        }
+
+        .highlight h3 {
+            color: #2d3436;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            text-align: center;
+            color: #667eea;
+            padding: 3rem 2rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 3rem 0;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            top: -1rem;
+            left: 2rem;
+            color: #667eea;
+            opacity: 0.3;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #667eea;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0.5rem;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .timeline-year {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            color: #555;
+        }
+
+        footer {
+            background: #2d3436;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: #dfe6e9;
+            margin: 0;
+        }
+
+        .back-home {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #667eea;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+
+            .content {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Marie Curie</h1>
+            <p class="subtitle">Pioneer of Radioactivity & Two-Time Nobel Laureate</p>
+        </header>
+
+        <div class="hero-image">⚛️</div>
+
+        <div class="content">
+            <div class="intro">
+                "Marie Curie's groundbreaking research and unwavering dedication to science changed the world forever.
+                Her legacy continues to inspire generations of scientists and researchers."
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Why I Admire Marie Curie</h2>
+                <p>
+                    Marie Curie stands as one of the most remarkable scientists in history, not only for her
+                    groundbreaking
+                    discoveries but for her perseverance in the face of overwhelming adversity. In an era when women
+                    were
+                    systematically excluded from scientific pursuits, she broke through barriers with determination and
+                    brilliance.
+                </p>
+                <p>
+                    What I find most inspiring about Marie Curie is her relentless pursuit of knowledge despite facing
+                    gender
+                    discrimination, financial hardship, and personal tragedy. She conducted her research in a converted
+                    shed
+                    with minimal equipment, yet her discoveries revolutionized our understanding of radioactivity and
+                    laid
+                    the foundation for modern physics and chemistry.
+                </p>
+                <p>
+                    Her humility and dedication to science over personal gain is equally admirable. She refused to
+                    patent
+                    the radium isolation process, believing that scientific knowledge should be freely available to all.
+                    Even after winning two Nobel Prizes, she continued her research with the same passion and rigor.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <h3>🏆 Historic Achievement</h3>
+                <p>
+                    Marie Curie remains the only person to have won Nobel Prizes in two different scientific fields
+                    (Physics in 1903 and Chemistry in 1911), and the first woman to win a Nobel Prize. Her achievements
+                    opened doors for women in science worldwide.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Major Achievements</h2>
+                <div class="achievements">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🔬</div>
+                        <div class="achievement-title">Discovery of Radium & Polonium</div>
+                        <div class="achievement-desc">Isolated two new radioactive elements, revolutionizing chemistry
+                        </div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🏅</div>
+                        <div class="achievement-title">Nobel Prize in Physics (1903)</div>
+                        <div class="achievement-desc">Shared with Pierre Curie and Henri Becquerel for radiation
+                            research</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🏅</div>
+                        <div class="achievement-title">Nobel Prize in Chemistry (1911)</div>
+                        <div class="achievement-desc">For the discovery of radium and polonium</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🏥</div>
+                        <div class="achievement-title">Mobile X-Ray Units</div>
+                        <div class="achievement-desc">Developed mobile radiography units during WWI, saving countless
+                            lives</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">👩‍🏫</div>
+                        <div class="achievement-title">First Female Professor</div>
+                        <div class="achievement-desc">First woman to become a professor at the University of Paris</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🌍</div>
+                        <div class="achievement-title">Radium Institute</div>
+                        <div class="achievement-desc">Founded the Radium Institute in Paris for medical research</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote">
+                Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so
+                that we may fear less.
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Life Journey</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1867</div>
+                        <div class="timeline-desc">Born Maria Sklodowska in Warsaw, Poland</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1891</div>
+                        <div class="timeline-desc">Moved to Paris to study at the Sorbonne</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1895</div>
+                        <div class="timeline-desc">Married Pierre Curie, beginning their scientific partnership</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1898</div>
+                        <div class="timeline-desc">Discovered polonium and radium</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1903</div>
+                        <div class="timeline-desc">Awarded Nobel Prize in Physics</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1911</div>
+                        <div class="timeline-desc">Awarded Nobel Prize in Chemistry</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1914-1918</div>
+                        <div class="timeline-desc">Developed mobile X-ray units for WWI battlefield hospitals</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1934</div>
+                        <div class="timeline-desc">Passed away from aplastic anemia, likely caused by radiation exposure
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Gallery</h2>
+                <div class="image-gallery">
+                    <div class="gallery-item">🔬</div>
+                    <div class="gallery-item">📚</div>
+                    <div class="gallery-item">⚗️</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Lasting Impact</h2>
+                <p>
+                    Marie Curie's contributions to science extend far beyond her discoveries. She fundamentally changed
+                    how we understand atomic structure and radioactivity. Her work laid the groundwork for developments
+                    in nuclear physics, cancer treatment through radiation therapy, and countless other applications.
+                </p>
+                <p>
+                    Perhaps equally important is her role as a trailblazer for women in science. She proved that gender
+                    is no barrier to scientific excellence and inspired countless women to pursue careers in STEM
+                    fields.
+                    Today, her legacy lives on through the Marie Curie Actions research fellowship program and numerous
+                    institutions bearing her name.
+                </p>
+                <p>
+                    Her life reminds us that true greatness comes from dedication, curiosity, and the courage to pursue
+                    knowledge despite obstacles. Marie Curie didn't just make scientific discoveries; she changed the
+                    world's perception of what women could achieve.
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>A tribute to Marie Curie (1867-1934) - A pioneer who illuminated the path for future generations</p>
+        </footer>
+    </div>
+
+    <a href="index.html" class="back-home">← Back to Hub</a>
+</body>
+
+</html>
